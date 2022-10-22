@@ -1,0 +1,21 @@
+---
+- name: Adding user
+  user:
+    name={{ item.username }}
+    groups={{ item.groups | default(omit)}}
+    createhome={{ item.createhome | default(false) }}
+    home={{ item.home | default('/home/' + item.username)}}
+    shell={{ item.shell | default('/bin/shell') }}
+    system={{ item.system | default(false)}}
+    comment={{ item.description | default('User account ' + item.username)}}
+  loop: '{{ users }}'
+  tags: users
+
+- name: Setting ssh authorized_keys for every user
+  authorized_key:
+    user={{ item.username }}
+    key='{{ item.ssh_key }}'
+  loop: '{{ users }}'
+  when: item.ssh_key is defined
+  tags: users
+...

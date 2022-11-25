@@ -8,6 +8,7 @@
     shell={{ item.shell | default('/bin/shell') }}
     system={{ item.system | default(false)}}
     comment={{ item.description | default('User account ' + item.username)}}
+  no_log: true
   loop: '{{ users }}'
   tags: users
 
@@ -15,6 +16,7 @@
   authorized_key:
     user={{ item.username }}
     key='{{ item.ssh_key }}'
+  no_log: true
   loop: '{{ users }}'
   when: item.ssh_key is defined
   tags: users

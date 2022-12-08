@@ -2,12 +2,13 @@
 - name: Adding user
   user:
     name={{ item.username }}
-    groups={{ item.groups }}
+    groups={{ item.groups | default(omit) }}
     createhome={{ item.createhome | default(false) }}
     home={{ item.home | default('/home/' + item.username)}}
     shell={{ item.shell | default('/bin/shell') }}
-    system={{ item.system | default(false)}}
-    comment={{ item.description | default('User account ' + item.username)}}
+    system={{ item.system | default(false) }}
+    comment={{ item.description | default('User account ' + item.username) }}
+    append=yes
   no_log: true
   loop: '{{ users }}'
   tags: users

@@ -2,7 +2,7 @@
 - name: Adding user
   user:
     name={{ item.username }}
-    groups={{ item.groups | default(omit)}}
+    groups={{ item.groups }}
     createhome={{ item.createhome | default(false) }}
     home={{ item.home | default('/home/' + item.username)}}
     shell={{ item.shell | default('/bin/shell') }}
